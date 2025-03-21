@@ -1,0 +1,178 @@
+<!-- src/app/pages/contact/contact.component.html -->
+<section class="contact-section">
+  <div class="container">
+    <h1 class="section-title" @fadeIn>Entre em Contato</h1>
+
+    <div class="contact-container" @fadeIn>
+      <!-- Informações de Contato - Sem alterações -->
+      <div class="contact-info">
+        <h2>Vamos Conversar</h2>
+        <p>Estou disponível para freelance, projetos de longo prazo ou apenas para trocar ideias sobre tecnologia.</p>
+
+        <div class="info-items">
+          <div class="info-item">
+            <div class="icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="details">
+              <h3>Email</h3>
+              <p>{{ contactInfo.email }}</p>
+              <button class="action-btn" (click)="contactViaEmail()">
+                Enviar Email
+                <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="icon">
+              <i class="fab fa-whatsapp"></i>
+            </div>
+            <div class="details">
+              <h3>WhatsApp</h3>
+              <p>{{ contactInfo.phone }}</p>
+              <button class="action-btn" (click)="contactViaWhatsApp()">
+                Iniciar Conversa
+                <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="details">
+              <h3>Localização</h3>
+              <p>{{ contactInfo.location }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="social-links">
+          <h3>Me Encontre nas Redes</h3>
+          <div class="social-icons">
+            <a *ngFor="let social of contactInfo.socialMedia"
+               [href]="social.url"
+               target="_blank"
+               class="social-icon"
+               [attr.aria-label]="social.name">
+              <i [class]="social.icon"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulário de Contato - Com melhorias -->
+      <div class="contact-form">
+        <h2>Envie uma Mensagem</h2>
+
+        <!-- Mensagem de sucesso -->
+        <div class="success-message" *ngIf="formSuccess">
+          <i class="fas fa-check-circle"></i>
+          <p>Sua mensagem foi enviada com sucesso! Entrarei em contato em breve.</p>
+        </div>
+
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" *ngIf="!formSuccess">
+          <div class="form-group">
+            <label for="name">Nome Completo</label>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="name"
+                formControlName="name"
+                placeholder="Seu nome completo"
+                [class.is-invalid]="nameControl?.invalid && (nameControl?.dirty || nameControl?.touched || formSubmitted)"
+              >
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="error-message" *ngIf="nameControl?.invalid && (nameControl?.dirty || nameControl?.touched || formSubmitted)">
+              <i class="fas fa-exclamation-circle"></i>
+              <span *ngIf="nameControl?.errors?.['required']">Nome é obrigatório.</span>
+              <span *ngIf="nameControl?.errors?.['minlength']">Nome deve ter pelo menos 3 caracteres.</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <div class="input-wrapper">
+              <input
+                type="email"
+                id="email"
+                formControlName="email"
+                placeholder="seu.email@exemplo.com"
+                [class.is-invalid]="emailControl?.invalid && (emailControl?.dirty || emailControl?.touched || formSubmitted)"
+              >
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="error-message" *ngIf="emailControl?.invalid && (emailControl?.dirty || emailControl?.touched || formSubmitted)">
+              <i class="fas fa-exclamation-circle"></i>
+              <span *ngIf="emailControl?.errors?.['required']">Email é obrigatório.</span>
+              <span *ngIf="emailControl?.errors?.['email']">Por favor, insira um email válido.</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="subject">Assunto</label>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="subject"
+                formControlName="subject"
+                placeholder="Assunto da mensagem"
+                [class.is-invalid]="subjectControl?.invalid && (subjectControl?.dirty || subjectControl?.touched || formSubmitted)"
+              >
+              <i class="fas fa-heading"></i>
+            </div>
+            <div class="error-message" *ngIf="subjectControl?.invalid && (subjectControl?.dirty || subjectControl?.touched || formSubmitted)">
+              <i class="fas fa-exclamation-circle"></i>
+              <span *ngIf="subjectControl?.errors?.['required']">Assunto é obrigatório.</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Mensagem</label>
+            <div class="input-wrapper">
+              <textarea
+                id="message"
+                rows="5"
+                formControlName="message"
+                placeholder="Digite sua mensagem aqui..."
+                [class.is-invalid]="messageControl?.invalid && (messageControl?.dirty || messageControl?.touched || formSubmitted)"
+              ></textarea>
+              <i class="fas fa-comment-alt"></i>
+            </div>
+            <div class="error-message" *ngIf="messageControl?.invalid && (messageControl?.dirty || messageControl?.touched || formSubmitted)">
+              <i class="fas fa-exclamation-circle"></i>
+              <span *ngIf="messageControl?.errors?.['required']">Mensagem é obrigatória.</span>
+              <span *ngIf="messageControl?.errors?.['minlength']">Mensagem deve ter pelo menos 10 caracteres.</span>
+            </div>
+          </div>
+
+          <div class="form-group radio-group">
+            <label>Preferência de contato:</label>
+            <div class="radio-options">
+              <div class="radio-option">
+                <input type="radio" id="email-preference" formControlName="contactPreference" value="email">
+                <span class="custom-radio"></span>
+                <i class="fas fa-envelope option-icon"></i>
+                <label for="email-preference">Email</label>
+              </div>
+              <div class="radio-option">
+                <input type="radio" id="whatsapp-preference" formControlName="contactPreference" value="whatsapp">
+                <span class="custom-radio"></span>
+                <i class="fab fa-whatsapp option-icon"></i>
+                <label for="whatsapp-preference">WhatsApp</label>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="submit-btn">
+            <span>Enviar Mensagem</span>
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

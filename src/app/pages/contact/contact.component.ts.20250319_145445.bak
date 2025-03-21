@@ -1,0 +1,121 @@
+// src/app/pages/contact/contact.component.ts
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { trigger, transition, style, animate } from '@angular/animations';
+
+@Component({
+  selector: 'app-contact',
+  templateUrl: './contact.component.html',
+  styleUrls: ['./contact.component.scss'],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(20px)' }),
+        animate(
+          '0.5s ease-out',
+          style({ opacity: 1, transform: 'translateY(0)' })
+        ),
+      ]),
+    ]),
+  ],
+})
+export class ContactComponent implements OnInit {
+  contactForm!: FormGroup;
+  formSubmitted = false;
+  formSuccess = false;
+
+  // Informações de contato
+  contactInfo = {
+    email: 'seu.email@exemplo.com',
+    phone: '+55 11 98765-4321',
+    whatsapp: '+5511987654321',
+    location: 'São Paulo, Brasil',
+    socialMedia: [
+      {
+        name: 'LinkedIn',
+        icon: 'fab fa-linkedin',
+        url: 'https://linkedin.com/',
+      },
+      { name: 'GitHub', icon: 'fab fa-github', url: 'https://github.com/' },
+      { name: 'Twitter', icon: 'fab fa-twitter', url: 'https://twitter.com/' },
+      {
+        name: 'Instagram',
+        icon: 'fab fa-instagram',
+        url: 'https://instagram.com/',
+      },
+    ],
+  };
+
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.initForm();
+  }
+
+  initForm(): void {
+    this.contactForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
+      subject: ['', Validators.required],
+      message: ['', [Validators.required, Validators.minLength(10)]],
+      contactPreference: ['email'], // email ou whatsapp
+    });
+  }
+
+  onSubmit(): void {
+    this.formSubmitted = true;
+
+    if (this.contactForm.valid) {
+      console.log('Formulário enviado:', this.contactForm.value);
+
+      // Simular envio bem-sucedido
+      setTimeout(() => {
+        this.formSuccess = true;
+        this.contactForm.reset();
+        this.formSubmitted = false;
+
+        // Reset do sucesso após 5 segundos
+        setTimeout(() => {
+          this.formSuccess = false;
+        }, 5000);
+      }, 1500);
+    }
+  }
+
+  // Método para contato via WhatsApp
+  contactViaWhatsApp(): void {
+    const message = encodeURIComponent('Olá, gostaria de entrar em contato!');
+    window.open(
+      `https://wa.me/${this.contactInfo.whatsapp}?text=${message}`,
+      '_blank'
+    );
+  }
+
+  // Método para enviar email
+  contactViaEmail(): void {
+    window.location.href = `mailto:${this.contactInfo.email}?subject=Contato via Portfólio`;
+  }
+
+  // Getters para validação de formulário
+  get nameControl() {
+    return this.contactForm.get('name');
+  }
+  get emailControl() {
+    return this.contactForm.get('email');
+  }
+  get subjectControl() {
+    return this.contactForm.get('subject');
+  }
+  get messageControl() {
+    return this.contactForm.get('message');
+  }
+}

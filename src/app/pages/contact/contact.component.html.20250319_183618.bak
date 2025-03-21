@@ -1,0 +1,383 @@
+<!-- src/app/pages/contact/contact.component.html -->
+<section class="contact-section">
+  <div class="container">
+    <h1 class="section-title" @fadeIn>Entre em Contato</h1>
+    
+    <!-- Feedback System -->
+    <div class="feedback-message" *ngIf="showFeedback" [@feedbackAnimation]="feedbackType" role="alert">
+      <i class="fas" [ngClass]="{
+        'fa-check-circle': feedbackType === 'success',
+        'fa-exclamation-circle': feedbackType === 'error',
+        'fa-info-circle': feedbackType === 'info'
+      }"></i>
+      <p>{{ feedbackMessage }}</p>
+      <button class="close-btn" (click)="showFeedback = false">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="contact-tabs">
+      <button class="tab-btn" [class.active]="activeTab === 'form'" (click)="setActiveTab('form')">
+        <i class="fas fa-paper-plane"></i> Enviar Mensagem
+      </button>
+      <button class="tab-btn" [class.active]="activeTab === 'info'" (click)="setActiveTab('info')">
+        <i class="fas fa-info-circle"></i> Informações de Contato
+      </button>
+      <button class="tab-btn" [class.active]="activeTab === 'faq'" (click)="setActiveTab('faq')">
+        <i class="fas fa-question-circle"></i> Perguntas Frequentes
+      </button>
+    </div>
+
+    <div class="contact-container" @fadeIn>
+      <!-- Informações de Contato - Mostrado quando a aba info está ativa ou em telas grandes -->  
+      <div class="contact-info" *ngIf="activeTab === 'info' || activeTab === 'form'" [@slideAnimation]>
+        <div class="info-header">
+          <h2>Vamos Conversar</h2>
+          <div class="response-time">
+            <i class="fas fa-clock"></i>
+            <span>Tempo médio de resposta: <strong>{{ contactInfo.responseTime }}</strong></span>
+          </div>
+        </div>
+        
+        <p>Estou disponível para freelance, projetos de longo prazo ou apenas para trocar ideias sobre tecnologia.</p>
+
+        <div class="info-items">
+          <div class="info-item" @pulseAnimation>
+            <div class="icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="details">
+              <h3>Email</h3>
+              <p>{{ contactInfo.email }}</p>
+              <button class="action-btn" (click)="contactViaEmail()">
+                Enviar Email
+                <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="info-item" @pulseAnimation>
+            <div class="icon">
+              <i class="fab fa-whatsapp"></i>
+            </div>
+            <div class="details">
+              <h3>WhatsApp</h3>
+              <p>{{ contactInfo.phone }}</p>
+              <button class="action-btn" (click)="contactViaWhatsApp()">
+                Iniciar Conversa
+                <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="info-item" @pulseAnimation>
+            <div class="icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="details">
+              <h3>Localização</h3>
+              <p>{{ contactInfo.location }}</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Localização sem mapa -->
+        <div class="location-container">
+          <h3>Localização</h3>
+          <div class="location-info">
+            <i class="fas fa-map-marked-alt location-icon"></i>
+            <p>{{ contactInfo.location }}</p>
+          </div>
+        </div>
+
+        <div class="social-links">
+          <h3>Me Encontre nas Redes</h3>
+          <div class="social-icons">
+            <a *ngFor="let social of contactInfo.socialMedia"
+               [href]="social.url"
+               target="_blank"
+               class="social-icon"
+               [attr.aria-label]="social.name"
+               @pulseAnimation>
+              <i [class]="social.icon"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- FAQ Section - Mostrado quando a aba FAQ está ativa -->
+      <div class="faq-section" *ngIf="activeTab === 'faq'" [@fadeIn]>
+        <h2>Perguntas Frequentes</h2>
+        <div class="faq-container">
+          <div class="faq-item" *ngFor="let faq of faqs; let i = index" (click)="toggleFaq(i)">
+            <div class="faq-question" [class.active]="selectedFaq === i">
+              <h3>{{ faq.question }}</h3>
+              <i class="fas" [ngClass]="selectedFaq === i ? 'fa-minus' : 'fa-plus'"></i>
+            </div>
+            <div class="faq-answer" [@expandCollapse]="selectedFaq === i ? 'expanded' : 'collapsed'">
+              <p>{{ faq.answer }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulário de Contato - Mostrado quando a aba form está ativa -->
+      <div class="contact-form" *ngIf="activeTab === 'form'" [@slideAnimation]>
+        <h2>Envie uma Mensagem</h2>
+
+        <!-- Mensagem de sucesso -->
+        <div class="success-message" *ngIf="formSuccess" @fadeIn>
+          <i class="fas fa-check-circle"></i>
+          <p>Sua mensagem foi enviada com sucesso! Entrarei em contato em breve.</p>
+          <button class="action-btn" (click)="formSuccess = false">
+            Enviar outra mensagem
+          </button>
+        </div>
+
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" *ngIf="!formSuccess" @formAnimation>
+          <div class="form-group floating-label">
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="name"
+                formControlName="name"
+                placeholder=" "
+                [class.is-invalid]="nameControl?.invalid && (nameControl?.dirty || nameControl?.touched || formSubmitted)"
+                [class.is-valid]="nameControl?.valid && (nameControl?.dirty || nameControl?.touched)"
+              >
+              <i class="fas fa-user"></i>
+              <label for="name">Nome Completo</label>
+            </div>
+            <div class="error-message" *ngIf="nameControl?.invalid && (nameControl?.dirty || nameControl?.touched || formSubmitted)">
+              <i class="fas fa-exclamation-circle"></i>
+              <span *ngIf="nameControl?.errors?.['required']">Nome é obrigatório.</span>
+              <span *ngIf="nameControl?.errors?.['minlength']">Nome deve ter pelo menos 3 caracteres.</span>
+            </div>
+          </div>
+
+          <div class="form-group floating-label">
+            <div class="input-wrapper">
+              <input
+                type="email"
+                id="email"
+                formControlName="email"
+                placeholder=" "
+                [class.is-invalid]="emailControl?.invalid && (emailControl?.dirty || emailControl?.touched || formSubmitted)"
+                [class.is-valid]="emailControl?.valid && (emailControl?.dirty || emailControl?.touched)"
+              >
+              <i class="fas fa-envelope"></i>
+              <label for="email">Email</label>
+            </div>
+            <div class="error-message" *ngIf="emailControl?.invalid && (emailControl?.dirty || emailControl?.touched || formSubmitted)">
+              <i class="fas fa-exclamation-circle"></i>
+              <span *ngIf="emailControl?.errors?.['required']">Email é obrigatório.</span>
+              <span *ngIf="emailControl?.errors?.['email']">Por favor, insira um email válido.</span>
+            </div>
+          </div>
+
+          <div class="form-group floating-label">
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="subject"
+                formControlName="subject"
+                placeholder=" "
+                [class.is-invalid]="subjectControl?.invalid && (subjectControl?.dirty || subjectControl?.touched || formSubmitted)"
+                [class.is-valid]="subjectControl?.valid && (subjectControl?.dirty || subjectControl?.touched)"
+              >
+              <i class="fas fa-heading"></i>
+              <label for="subject">Assunto</label>
+            </div>
+            <div class="error-message" *ngIf="subjectControl?.invalid && (subjectControl?.dirty || subjectControl?.touched || formSubmitted)">
+              <i class="fas fa-exclamation-circle"></i>
+              <span *ngIf="subjectControl?.errors?.['required']">Assunto é obrigatório.</span>
+            </div>
+          </div>
+          
+          <!-- Campo de telefone opcional -->
+          <div class="form-group floating-label">
+            <div class="input-wrapper">
+              <input
+                type="tel"
+                id="phone"
+                formControlName="phone"
+                placeholder=" "
+                [class.is-invalid]="phoneControl?.invalid && (phoneControl?.dirty || phoneControl?.touched)"
+                [class.is-valid]="phoneControl?.valid && phoneControl?.value && (phoneControl?.dirty || phoneControl?.touched)"
+              >
+              <i class="fas fa-phone"></i>
+              <label for="phone">Telefone (opcional)</label>
+            </div>
+            <div class="error-message" *ngIf="phoneControl?.invalid && (phoneControl?.dirty || phoneControl?.touched)">
+              <i class="fas fa-exclamation-circle"></i>
+              <span *ngIf="phoneControl?.errors?.['pattern']">Formato de telefone inválido.</span>
+            </div>
+          </div>
+          
+          <!-- Tipo de projeto -->
+          <!-- Tipo de projeto -->
+          <div class="form-group project-type-group">
+            <label>Tipo de Projeto</label>
+            <div class="project-type-cards">
+              <div class="project-card" 
+                   [class.selected]="projectTypeControl?.value === 'website'"
+                   (click)="selectProjectType('website')">
+                <input type="radio" id="website" formControlName="projectType" value="website">
+                <div class="card-icon">
+                  <i class="fas fa-globe"></i>
+                </div>
+                <div class="card-content">
+                  <h4>Website</h4>
+                  <p>Sites institucionais, landing pages e blogs</p>
+                </div>
+                <div class="card-check">
+                  <i class="fas fa-check-circle"></i>
+                </div>
+              </div>
+              
+              <div class="project-card" 
+                   [class.selected]="projectTypeControl?.value === 'app'"
+                   (click)="selectProjectType('app')">
+                <input type="radio" id="app" formControlName="projectType" value="app">
+                <div class="card-icon">
+                  <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div class="card-content">
+                  <h4>Aplicativo</h4>
+                  <p>Apps móveis para iOS, Android ou híbridos</p>
+                </div>
+                <div class="card-check">
+                  <i class="fas fa-check-circle"></i>
+                </div>
+              </div>
+              
+              <div class="project-card" 
+                   [class.selected]="projectTypeControl?.value === 'webapp'"
+                   (click)="selectProjectType('webapp')">
+                <input type="radio" id="webapp" formControlName="projectType" value="webapp">
+                <div class="card-icon">
+                  <i class="fas fa-window-maximize"></i>
+                </div>
+                <div class="card-content">
+                  <h4>Web App</h4>
+                  <p>Aplicações web complexas e sistemas corporativos</p>
+                </div>
+                <div class="card-check">
+                  <i class="fas fa-check-circle"></i>
+                </div>
+              </div>
+              
+              <div class="project-card" 
+                   [class.selected]="projectTypeControl?.value === 'ecommerce'"
+                   (click)="selectProjectType('ecommerce')">
+                <input type="radio" id="ecommerce" formControlName="projectType" value="ecommerce">
+                <div class="card-icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </div>
+                <div class="card-content">
+                  <h4>E-commerce</h4>
+                  <p>Lojas virtuais e plataformas de vendas online</p>
+                </div>
+                <div class="card-check">
+                  <i class="fas fa-check-circle"></i>
+                </div>
+              </div>
+              
+              <div class="project-card" 
+                   [class.selected]="projectTypeControl?.value === 'other'"
+                   (click)="selectProjectType('other')">
+                <input type="radio" id="other" formControlName="projectType" value="other">
+                <div class="card-icon">
+                  <i class="fas fa-project-diagram"></i>
+                </div>
+                <div class="card-content">
+                  <h4>Outro</h4>
+                  <p>Consultoria, manutenção ou projetos especiais</p>
+                </div>
+                <div class="card-check">
+                  <i class="fas fa-check-circle"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Urgência -->
+          <div class="form-group urgency-group">
+            <label>Urgência</label>
+            <div class="urgency-slider">
+              <div class="urgency-options">
+                <div class="urgency-option" [class.selected]="urgencyControl?.value === 'low'">
+                  <input type="radio" id="low" formControlName="urgency" value="low">
+                  <label for="low">Baixa</label>
+                </div>
+                <div class="urgency-option" [class.selected]="urgencyControl?.value === 'normal'">
+                  <input type="radio" id="normal" formControlName="urgency" value="normal">
+                  <label for="normal">Normal</label>
+                </div>
+                <div class="urgency-option" [class.selected]="urgencyControl?.value === 'high'">
+                  <input type="radio" id="high" formControlName="urgency" value="high">
+                  <label for="high">Alta</label>
+                </div>
+              </div>
+              <div class="urgency-indicator">
+                <div class="indicator-dot" [ngStyle]="{
+                  'left': urgencyControl?.value === 'low' ? '16.67%' : 
+                          urgencyControl?.value === 'normal' ? '50%' : '83.33%'
+                }"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group floating-label">
+            <div class="input-wrapper">
+              <textarea
+                id="message"
+                rows="5"
+                formControlName="message"
+                placeholder=" "
+                [class.is-invalid]="messageControl?.invalid && (messageControl?.dirty || messageControl?.touched || formSubmitted)"
+                [class.is-valid]="messageControl?.valid && (messageControl?.dirty || messageControl?.touched)"
+              ></textarea>
+              <i class="fas fa-comment-alt"></i>
+              <label for="message">Mensagem</label>
+            </div>
+            <div class="character-count" [class.warning]="messageControl?.value?.length > 400">
+              {{ messageControl?.value?.length || 0 }}/500 caracteres
+            </div>
+            <div class="error-message" *ngIf="messageControl?.invalid && (messageControl?.dirty || messageControl?.touched || formSubmitted)">
+              <i class="fas fa-exclamation-circle"></i>
+              <span *ngIf="messageControl?.errors?.['required']">Mensagem é obrigatória.</span>
+              <span *ngIf="messageControl?.errors?.['minlength']">Mensagem deve ter pelo menos 10 caracteres.</span>
+            </div>
+          </div>
+
+          <!-- Honeypot field to prevent spam -->
+          <div class="honeypot-field">
+            <input type="text" formControlName="honeypot">
+          </div>
+
+          <button type="submit" class="submit-btn" @buttonAnimation [disabled]="isLoading">
+            <span *ngIf="!isLoading">Enviar Mensagem</span>
+            <span *ngIf="isLoading">Enviando...</span>
+            <i *ngIf="!isLoading" class="fas fa-paper-plane"></i>
+            <i *ngIf="isLoading" class="fas fa-spinner fa-spin"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+    
+    <!-- Botões de contato rápido flutuantes -->
+    <div class="quick-contact-buttons">
+      <a href="mailto:{{ contactInfo.email }}" class="quick-contact-btn email-btn" title="Enviar email">
+        <i class="fas fa-envelope"></i>
+      </a>
+      <a [href]="'https://wa.me/' + contactInfo.whatsapp" target="_blank" class="quick-contact-btn whatsapp-btn" title="Conversar no WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+      </a>
+      <a href="tel:{{ contactInfo.phone }}" class="quick-contact-btn phone-btn" title="Ligar">
+        <i class="fas fa-phone"></i>
+      </a>
+    </div>
+  </div>
+</section>>

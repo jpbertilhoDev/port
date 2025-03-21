@@ -1,0 +1,12 @@
+<div class="skill-badge">
+  <div class="skill-icon" *ngIf="skill.icon">
+    <i [class]="skill.icon"></i>
+  </div>
+  <div class="skill-info">
+    <h3>{{ skill.name }}</h3>
+    <div class="skill-rating">
+      <span class="star filled" *ngFor="let i of getStarArray(skill.level)">★</span>
+      <span class="star empty" *ngFor="let i of getEmptyStarArray(skill.level)">☆</span>
+    </div>
+  </div>
+</div>

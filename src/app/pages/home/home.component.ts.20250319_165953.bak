@@ -1,0 +1,30 @@
+import { Component, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { NgFor } from '@angular/common';
+import { ProjectCardComponent } from '../../components/project-card/project-card.component';
+import { SkillBadgeComponent } from '../../components/skill-badge/skill-badge.component';
+import { Project } from '../../models/project.interface';
+import { Skill } from '../../models/skill.interface';
+import { ProjectsService } from '../../services/projects.service';
+import { SkillsService } from '../../services/skills.service';
+
+@Component({
+  selector: 'app-home',
+  imports: [RouterModule, NgFor, ProjectCardComponent, SkillBadgeComponent],
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.css',
+})
+export class HomeComponent implements OnInit {
+  featuredProjects: Project[] = [];
+  skills: Skill[] = [];
+
+  constructor(
+    private projectsService: ProjectsService,
+    private skillsService: SkillsService
+  ) {}
+
+  ngOnInit(): void {
+    this.featuredProjects = this.projectsService.getFeaturedProjects();
+    this.skills = this.skillsService.getSkills();
+  }
+}

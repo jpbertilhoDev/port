@@ -1,0 +1,195 @@
+<!-- src/app/pages/about/about.component.html -->
+<section class="about-section" @fadeIn>
+  <div class="container">
+    <h1 class="section-title">Sobre Mim</h1>
+
+    <div class="about-content">
+      <!-- Seção de Perfil -->
+      <div class="profile-info">
+        <div class="profile-image">
+          <img src="assets/images/IMG-20241118-WA0026.jpg" alt="Minha foto de perfil">
+          <div class="profile-shape"></div>
+        </div>
+
+        <div class="bio">
+          <div class="bio-header">
+            <h2>Olá, sou <span class="highlight">João Pedro</span></h2>
+            <h3><span class="typed-text">Desenvolvedor Full Stack</span></h3>
+          </div>
+
+          <p>
+            Sou um desenvolvedor apaixonado por criar experiências digitais incríveis e inovadoras. Com <strong>experiência sólida</strong>,
+            especializo-me em desenvolvimento web usando tecnologias modernas como Angular, React e Node.js.
+          </p>
+
+          <p>
+            Minha abordagem combina habilidades técnicas avançadas com um olhar atento para design e experiência do usuário.
+            Acredito que o melhor software não é apenas funcional, mas também intuitivo e agradável de usar.
+          </p>
+
+          <div class="action-buttons">
+            <button class="btn btn-primary" (click)="downloadCV()">
+              <i class="fas fa-download"></i> Download CV
+            </button>
+            <a href="#contact" class="btn btn-outline">
+              <i class="fas fa-paper-plane"></i> Entre em Contato
+            </a>
+          </div>
+
+          <div class="personal-info">
+            <div class="info-item">
+              <i class="fas fa-envelope"></i>
+              <span>joaopaulo</span>
+            </div>
+            <div class="info-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Lisboa, Portugal</span>
+            </div>
+            <div class="info-item">
+              <i class="fas fa-briefcase"></i>
+              <span>Disponível para Projetos</span>
+            </div>
+          </div>
+
+          <div class="social-links">
+            <a href="https://github.com/" target="_blank" class="social-link" aria-label="GitHub">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="https://linkedin.com/" target="_blank" class="social-link" aria-label="LinkedIn">
+              <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://twitter.com/" target="_blank" class="social-link" aria-label="Twitter">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://instagram.com/" target="_blank" class="social-link" aria-label="Instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contador de estatísticas -->
+      <div class="stats-counter">
+        <div class="stat-item">
+          <div class="stat-number">5+</div>
+          <div class="stat-title">Anos de Experiência</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">50+</div>
+          <div class="stat-title">Projetos Concluídos</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">30+</div>
+          <div class="stat-title">Clientes Satisfeitos</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">10+</div>
+          <div class="stat-title">Certificações</div>
+        </div>
+      </div>
+
+      <!-- Tabs de navegação -->
+      <div class="about-tabs">
+        <div class="tab-buttons">
+          <button class="tab-btn" [class.active]="activeTab === 'skills'" (click)="setActiveTab('skills')">
+            <i class="fas fa-code"></i> Habilidades
+          </button>
+          <button class="tab-btn" [class.active]="activeTab === 'experience'" (click)="setActiveTab('experience')">
+            <i class="fas fa-briefcase"></i> Experiência
+          </button>
+          <button class="tab-btn" [class.active]="activeTab === 'education'" (click)="setActiveTab('education')">
+            <i class="fas fa-graduation-cap"></i> Formação
+          </button>
+          <button class="tab-btn" [class.active]="activeTab === 'certifications'" (click)="setActiveTab('certifications')">
+            <i class="fas fa-certificate"></i> Certificações
+          </button>
+        </div>
+
+        <!-- Conteúdo das Tabs -->
+        <div class="tab-content">
+          <!-- Tab de Habilidades -->
+          <div class="tab-pane" *ngIf="activeTab === 'skills'" @staggerList>
+            <h2 class="section-subtitle">Minhas Habilidades</h2>
+            <div class="skills-grid">
+              <app-skill-badge *ngFor="let skill of skills" [skill]="skill" class="stagger-item"></app-skill-badge>
+            </div>
+          </div>
+
+          <!-- Tab de Experiência Profissional -->
+          <div class="tab-pane" *ngIf="activeTab === 'experience'" @staggerList>
+            <h2 class="section-subtitle">Experiência Profissional</h2>
+            <div class="timeline">
+              <div class="timeline-item stagger-item" *ngFor="let exp of experiences">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                  <h3 class="timeline-title">{{ exp.position }}</h3>
+                  <p class="timeline-company">{{ exp.company }}</p>
+                  <p class="timeline-period">{{ exp.period }}</p>
+                  <p class="timeline-description">{{ exp.description }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab de Formação Acadêmica -->
+          <div class="tab-pane" *ngIf="activeTab === 'education'" @staggerList>
+            <h2 class="section-subtitle">Formação Acadêmica</h2>
+            <div class="education-list">
+              <div class="education-item stagger-item" *ngFor="let edu of education">
+                <div class="education-year">{{ edu.year }}</div>
+                <div class="education-info">
+                  <h3 class="education-degree">{{ edu.degree }}</h3>
+                  <p class="education-institution">{{ edu.institution }}</p>
+                  <p class="education-description">{{ edu.description }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab de Certificações -->
+          <div class="tab-pane" *ngIf="activeTab === 'certifications'" @staggerList>
+            <h2 class="section-subtitle">Certificações</h2>
+            <div class="certifications-grid">
+              <div class="certification-item stagger-item" *ngFor="let cert of certifications">
+                <div class="certification-icon">
+                  <i [class]="cert.icon"></i>
+                </div>
+                <div class="certification-info">
+                  <h3 class="certification-name">{{ cert.name }}</h3>
+                  <p class="certification-issuer">{{ cert.issuer }} <span class="certification-year">{{ cert.year }}</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Projetos em Destaque -->
+      <div class="featured-projects">
+        <h2 class="section-subtitle">Projetos em Destaque</h2>
+        <div class="projects-grid">
+          <div class="project-card" *ngFor="let project of projects">
+            <div class="project-image">
+              <img [src]="project.image" [alt]="project.name">
+            </div>
+            <div class="project-content">
+              <h3 class="project-title">{{ project.name }}</h3>
+              <p class="project-description">{{ project.description }}</p>
+              <div class="project-tech">
+                <span class="tech-tag" *ngFor="let tech of project.technologies">{{ tech }}</span>
+              </div>
+              <div class="project-links">
+                <a href="#" class="project-link">
+                  <i class="fas fa-eye"></i> Ver Projeto
+                </a>
+                <a href="#" class="project-link">
+                  <i class="fab fa-github"></i> Código
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

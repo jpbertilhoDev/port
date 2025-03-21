@@ -1,0 +1,78 @@
+<section class="projects-section" @fadeIn>
+  <div class="container">
+    <div class="section-header">
+      <h1 class="section-title">Meus Projetos</h1>
+      <p class="section-subtitle">
+        Explore meu portfólio de projetos recentes, demonstrando minhas habilidades e experiência em desenvolvimento web.
+      </p>
+    </div>
+
+    <!-- Filtros de Categoria -->
+    <div class="project-filters">
+      <button 
+        class="filter-btn" 
+        [class.active]="activeCategory === 'all'" 
+        (click)="filterProjects('all')"
+      >
+        Todos
+      </button>
+      <button 
+        *ngFor="let category of categories" 
+        class="filter-btn" 
+        [class.active]="activeCategory === category" 
+        (click)="filterProjects(category)"
+      >
+        {{ category }}
+      </button>
+    </div>
+
+    <!-- Grade de Projetos -->
+    <div class="projects-grid" @staggerList>
+      <div class="project-card" *ngFor="let project of filteredProjects">
+        <div class="project-image">
+          <img [src]="project.image" [alt]="project.title">
+          <div class="project-overlay">
+            <div class="project-links">
+              <a [href]="project.demoUrl" target="_blank" class="project-link" *ngIf="project.demoUrl">
+                <i class="fas fa-eye"></i> Demo
+              </a>
+              <a [href]="project.codeUrl" target="_blank" class="project-link" *ngIf="project.codeUrl">
+                <i class="fab fa-github"></i> Código
+              </a>
+            </div>
+          </div>
+          <div class="project-category">
+            <span>{{ project.category }}</span>
+          </div>
+          <div class="project-completed">
+            <span><i class="far fa-calendar-check"></i> {{ project.completed }}</span>
+          </div>
+        </div>
+        <div class="project-content">
+          <h3 class="project-title">{{ project.title }}</h3>
+          <p class="project-description">{{ project.description }}</p>
+          
+          <div class="project-details">
+            <div class="project-client" *ngIf="project.client">
+              <span class="detail-label">Cliente:</span>
+              <span class="detail-value">{{ project.client }}</span>
+            </div>
+          </div>
+
+          <div class="project-tech">
+            <span class="tech-tag" *ngFor="let tech of project.technologies">{{ tech }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seção de Call to Action -->
+    <div class="project-cta">
+      <h2>Tem um projeto em mente?</h2>
+      <p>Estou disponível para novos projetos e colaborações. Vamos discutir suas ideias!</p>
+      <a routerLink="/contact" class="btn btn-primary">
+        <i class="fas fa-paper-plane"></i> Entre em contato
+      </a>
+    </div>
+  </div>
+</section>

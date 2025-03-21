@@ -1,0 +1,95 @@
+<!-- src/app/pages/about/about.component.html -->
+<section class="about-section">
+  <div class="container">
+    <h1 class="section-title">Sobre Mim</h1>
+
+    <div class="about-content">
+      <!-- Seção de Perfil -->
+      <div class="profile-info">
+        <div class="profile-image">
+          <img src="assets/images/JP.jpg" alt="Minha foto de perfil">
+        </div>
+
+        <div class="bio">
+          <h2>Olá, sou <span class="highlight">João Paulo</span></h2>
+          <h3>Desenvolvedor Full Stack</h3>
+
+          <p>
+            Sou um desenvolvedor apaixonado por criar experiências digitais incríveis e inovadoras. Com experiência sólida,
+            especializo-me em desenvolvimento web usando tecnologias modernas como Angular, React e Node.js.
+          </p>
+
+          <p>
+            Minha abordagem combina habilidades técnicas avançadas com um olhar atento para design e experiência do usuário.
+            Acredito que o melhor software não é apenas funcional, mas também intuitivo e agradável de usar.
+          </p>
+
+          <div class="personal-info">
+            <div class="info-item">
+              <i class="fas fa-envelope"></i>
+              <span></span>
+            </div>
+            <div class="info-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Lisboa, Portugal</span>
+            </div>
+            <div class="info-item">
+              <i class="fas fa-briefcase"></i>
+              <span>Disponível para Projetos</span>
+            </div>
+          </div>
+
+          <div class="social-links">
+            <a href="https://github.com/" target="_blank" class="social-link" aria-label="GitHub">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="https://linkedin.com/" target="_blank" class="social-link" aria-label="LinkedIn">
+              <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://twitter.com/" target="_blank" class="social-link" aria-label="Twitter">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seção de Habilidades -->
+      <div class="skills-section">
+        <h2 class="section-subtitle">Minhas Habilidades</h2>
+        <div class="skills-grid">
+          <app-skill-badge *ngFor="let skill of skills" [skill]="skill"></app-skill-badge>
+        </div>
+      </div>
+
+      <!-- Seção de Experiência Profissional -->
+      <div class="experience-section">
+        <h2 class="section-subtitle">Experiência Profissional</h2>
+        <div class="timeline">
+          <div class="timeline-item" *ngFor="let exp of experiences">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <h3 class="timeline-title">{{ exp.position }}</h3>
+              <p class="timeline-company">{{ exp.company }}</p>
+              <p class="timeline-period">{{ exp.period }}</p>
+              <p class="timeline-description">{{ exp.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seção de Formação Acadêmica -->
+      <div class="education-section">
+        <h2 class="section-subtitle">Formação Acadêmica</h2>
+        <div class="education-list">
+          <div class="education-item" *ngFor="let edu of education">
+            <div class="education-year">{{ edu.year }}</div>
+            <div class="education-info">
+              <h3 class="education-degree">{{ edu.degree }}</h3>
+              <p class="education-institution">{{ edu.institution }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

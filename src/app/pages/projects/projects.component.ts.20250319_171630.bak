@@ -1,0 +1,150 @@
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
+
+interface Project {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  technologies: string[];
+  demoUrl?: string;
+  codeUrl?: string;
+  featured: boolean;
+  category: string;
+  completed: string;
+  client?: string;
+}
+
+@Component({
+  selector: 'app-projects',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './projects.component.html',
+  styleUrls: ['./projects.component.css'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(20px)' }),
+        animate('0.6s ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+      ])
+    ]),
+    trigger('staggerList', [
+      transition(':enter', [
+        query('.project-card', [
+          style({ opacity: 0, transform: 'translateY(30px)' }),
+          stagger(100, [
+            animate('0.5s ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+          ])
+        ], { optional: true })
+      ])
+    ])
+  ]
+})
+export class ProjectsComponent implements OnInit {
+  projects: Project[] = [
+    {
+      id: 1,
+      title: 'E-commerce Platform',
+      description: 'Uma plataforma completa de comércio eletrônico com painel administrativo, gateway de pagamento e sistema de gestão de estoque. Implementa recursos avançados de filtragem, busca e recomendações personalizadas.',
+      image: 'assets/images/projects/ecommerce.jpg',
+      technologies: ['Angular', 'Node.js', 'MongoDB', 'Express', 'Stripe API'],
+      demoUrl: 'https://ecommerce-demo.example.com',
+      codeUrl: 'https://github.com/username/ecommerce-platform',
+      featured: true,
+      category: 'Web Application',
+      completed: 'Dezembro 2023',
+      client: 'RetailTech Inc.'
+    },
+    {
+      id: 2,
+      title: 'Dashboard Analytics',
+      description: 'Sistema de análise de dados em tempo real com visualizações interativas e relatórios personalizados. Permite a integração com múltiplas fontes de dados e exportação em diversos formatos.',
+      image: 'assets/images/projects/dashboard.jpg',
+      technologies: ['React', 'D3.js', 'Firebase', 'Material UI', 'Redux'],
+      demoUrl: 'https://analytics-demo.example.com',
+      codeUrl: 'https://github.com/username/analytics-dashboard',
+      featured: true,
+      category: 'Data Visualization',
+      completed: 'Agosto 2023',
+      client: 'DataInsight Corp'
+    },
+    {
+      id: 3,
+      title: 'Fitness Mobile App',
+      description: 'Aplicativo mobile para acompanhamento de treinos, nutrição e progresso físico. Inclui recursos de gamificação, comunidade social e integração com dispositivos wearables.',
+      image: 'assets/images/projects/fitness.jpg',
+      technologies: ['React Native', 'GraphQL', 'Node.js', 'MongoDB', 'AWS'],
+      demoUrl: 'https://fitness-app.example.com',
+      codeUrl: 'https://github.com/username/fitness-app',
+      featured: false,
+      category: 'Mobile Application',
+      completed: 'Março 2023',
+      client: 'FitLife Solutions'
+    },
+    {
+      id: 4,
+      title: 'Real Estate Platform',
+      description: 'Plataforma para busca e gestão de imóveis com recursos de realidade virtual, mapas interativos e calculadoras financeiras. Integra-se com múltiplos serviços de listagem de imóveis.',
+      image: 'assets/images/projects/realestate.jpg',
+      technologies: ['Vue.js', 'Django', 'PostgreSQL', 'Google Maps API', 'Docker'],
+      demoUrl: 'https://realestate-demo.example.com',
+      codeUrl: 'https://github.com/username/realestate-platform',
+      featured: false,
+      category: 'Web Application',
+      completed: 'Janeiro 2023',
+      client: 'HomeVision Properties'
+    },
+    {
+      id: 5,
+      title: 'Task Management System',
+      description: 'Sistema completo de gerenciamento de tarefas e projetos com recursos de colaboração em equipe, acompanhamento de tempo e integração com ferramentas populares de produtividade.',
+      image: 'assets/images/projects/taskmanager.jpg',
+      technologies: ['Angular', 'NestJS', 'PostgreSQL', 'Socket.io', 'RxJS'],
+      demoUrl: 'https://taskmanager-demo.example.com',
+      codeUrl: 'https://github.com/username/task-manager',
+      featured: true,
+      category: 'Productivity Tool',
+      completed: 'Outubro 2022',
+      client: 'ProductiveWorks LLC'
+    },
+    {
+      id: 6,
+      title: 'Learning Management System',
+      description: 'Plataforma educacional completa com recursos para criação de cursos, gestão de alunos, avaliações automatizadas e análise de desempenho.',
+      image: 'assets/images/projects/lms.jpg',
+      technologies: ['React', 'Node.js', 'MongoDB', 'AWS', 'Redux'],
+      demoUrl: 'https://lms-demo.example.com',
+      codeUrl: 'https://github.com/username/learning-platform',
+      featured: false,
+      category: 'Education',
+      completed: 'Julho 2022',
+      client: 'EduTech Innovations'
+    }
+  ];
+
+  filteredProjects: Project[] = [];
+  categories: string[] = [];
+  activeCategory: string = 'all';
+
+  ngOnInit(): void {
+    // Extrair categorias únicas dos projetos
+    this.categories = [...new Set(this.projects.map(project => project.category))];
+    // Inicializar com todos os projetos
+    this.filterProjects('all');
+  }
+
+  filterProjects(category: string): void {
+    this.activeCategory = category;
+    
+    if (category === 'all') {
+      this.filteredProjects = [...this.projects];
+    } else {
+      this.filteredProjects = this.projects.filter(project => project.category === category);
+    }
+  }
+
+  getFeaturedProjects(): Project[] {
+    return this.projects.filter(project => project.featured);
+  }
+}

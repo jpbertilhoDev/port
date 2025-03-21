@@ -1,0 +1,189 @@
+// src/app/pages/contact/contact.component.ts
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { trigger, transition, style, animate, query, stagger, state } from '@angular/animations';
+
+@Component({
+  selector: 'app-contact',
+  templateUrl: './contact.component.html',
+  styleUrls: ['./contact.component.css'],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(20px)' }),
+        animate('0.5s ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+      ])
+    ]),
+    trigger('slideAnimation', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateX(-20px)' }),
+        animate('0.4s ease-out', style({ opacity: 1, transform: 'translateX(0)' }))
+      ]),
+      transition(':leave', [
+        animate('0.3s ease-in', style({ opacity: 0, transform: 'translateX(20px)' }))
+      ])
+    ]),
+    trigger('formAnimation', [
+      transition(':enter', [
+        query('.form-group', [
+          style({ opacity: 0, transform: 'translateY(20px)' }),
+          stagger(100, [
+            animate('0.5s ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+          ])
+        ], { optional: true })
+      ])
+    ]),
+    trigger('buttonAnimation', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'scale(0.8)' }),
+        animate('0.5s 0.3s ease-out', style({ opacity: 1, transform: 'scale(1)' }))
+      ])
+    ]),
+    trigger('pulseAnimation', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'scale(0.9)' }),
+        animate('0.3s ease-out', style({ opacity: 1, transform: 'scale(1)' }))
+      ])
+    ]),
+    trigger('expandCollapse', [
+      state('collapsed', style({ height: '0', opacity: 0, overflow: 'hidden' })),
+      state('expanded', style({ height: '*', opacity: 1 })),
+      transition('collapsed <=> expanded', animate('300ms ease-in-out'))
+    ]),
+    trigger('feedbackAnimation', [
+      state('success', style({ backgroundColor: 'rgba(76, 175, 80, 0.1)', borderColor: '#4caf50' })),
+      state('error', style({ backgroundColor: 'rgba(244, 67, 54, 0.1)', borderColor: '#f44336' })),
+      state('info', style({ backgroundColor: 'rgba(33, 150, 243, 0.1)', borderColor: '#2196f3' })),
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(-20px)' }),
+        animate('0.3s ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+      ]),
+      transition(':leave', [
+        animate('0.2s ease-in', style({ opacity: 0, transform: 'translateY(-20px)' }))
+      ])
+    ])
+  ]
+})
+export class ContactComponent implements OnInit, AfterViewInit {
+  contactForm!: FormGroup;
+  formSubmitted = false;
+  formSuccess = false;
+  isLoading = false;
+  activeTab: string = 'form';
+  showFaq: boolean = false;
+  selectedFaq: number | null = null;
+
+  feedbackMessage: string = '';
+  feedbackType: 'success' | 'error' | 'info' | '' = '';
+  showFeedback: boolean = false;
+  
+  // Informações de contato
+  contactInfo = {
+    email: 'joao.pedro@exemplo.com',
+    phone: '+351 123 456 789',
+    whatsapp: '351123456789',
+    location: 'Lisboa, Portugal',
+    responseTime: '24 horas',
+    socialMedia: [
+      { name: 'LinkedIn', url: 'https://linkedin.com/', icon: 'fab fa-linkedin' },
+      { name: 'GitHub', url: 'https://github.com/', icon: 'fab fa-github' },
+      { name: 'Twitter', url: 'https://twitter.com/', icon: 'fab fa-twitter' },
+      { name: 'Instagram', url: 'https://instagram.com/', icon: 'fab fa-instagram' }
+    ]
+  };
+  
+  // FAQs
+  faqs = [
+    {
+      question: 'Quais tipos de projetos você trabalha?',
+      answer: 'Trabalho com desenvolvimento web, aplicativos móveis, sistemas corporativos e consultoria técnica.'
+    },
+    {
+      question: 'Qual é o seu processo de trabalho?',
+      answer: 'Meu processo inclui análise de requisitos, protótipos, desenvolvimento iterativo e suporte pós-lançamento.'
+    },
+    {
+      question: 'Quanto tempo leva para concluir um projeto?',
+      answer: 'O tempo varia de acordo com a complexidade. Projetos pequenos podem levar 2-4 semanas, enquanto projetos maiores podem levar 2-6 meses.'
+    },
+    {
+      question: 'Você oferece manutenção após a conclusão?',
+      answer: 'Sim, ofereço planos de manutenção e suporte técnico para todos os projetos concluídos.'
+    },
+    {
+      question: 'Como funciona o pagamento?',
+      answer: 'Trabalho com um modelo de pagamento dividido em etapas: 30% no início, 30% no meio do projeto e 40% na entrega.'
+    }
+  ];
+
+
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.initForm();
+  }
+
+   // Aba inicial
+
+  setActiveTab(tab: string) {
+    this.activeTab = tab;
+  }
+
+  toggleFaq(index: number) {
+    this.selectedFaq = this.selectedFaq === index ? null : index;
+  }
+
+  contactViaEmail() {
+    window.location.href = `mailto:${this.contactInfo.email}`;
+  }
+
+  contactViaWhatsApp() {
+    window.open(`https://wa.me/${this.contactInfo.whatsapp}`, '_blank');
+  }
+  
+  // Getters para acessar os controles do formulário
+  get nameControl() { return this.contactForm.get('name'); }
+  get emailControl() { return this.contactForm.get('email'); }
+  get subjectControl() { return this.contactForm.get('subject'); }
+  get messageControl() { return this.contactForm.get('message'); }
+  get phoneControl() { return this.contactForm.get('phone'); }
+  get projectTypeControl() { return this.contactForm.get('projectType'); }
+  get urgencyControl() { return this.contactForm.get('urgency'); }
+
+  ngAfterViewInit(): void {}
+
+  initForm(): void {
+    this.contactForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
+      subject: ['', Validators.required],
+      phone: ['', [Validators.pattern('^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')]],
+      projectType: ['website'],
+      urgency: ['normal'],
+      message: ['', [Validators.required, Validators.minLength(10)]],
+      honeypot: ['']
+    });
+  }
+
+  onSubmit(): void {
+    this.formSubmitted = true;
+    if (this.contactForm.valid) {
+      this.isLoading = true;
+      setTimeout(() => {
+        this.isLoading = false;
+        this.formSuccess = true;
+        this.contactForm.reset();
+        this.formSubmitted = false;
+      }, 1500);
+    }
+  }
+}
