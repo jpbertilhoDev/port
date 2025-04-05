@@ -1,22 +1,27 @@
-<div class="project-card">
+
+<div class="project-card" [@fadeIn]>
   <div class="project-image">
-    <img [src]="project.imageUrl" [alt]="project.title">
+    <img [src]="project.image || project.imageUrl" [alt]="project.title" class="img-fluid">
     <div class="project-overlay">
-      <div class="project-links">
-        <a [href]="project.projectUrl" target="_blank" rel="noopener noreferrer" *ngIf="project.projectUrl">
-          <i class="fas fa-external-link-alt"></i>
-        </a>
-        <a [href]="project.githubUrl" target="_blank" rel="noopener noreferrer" *ngIf="project.githubUrl">
-          <i class="fab fa-github"></i>
-        </a>
+      <div class="project-techs">
+        <span *ngFor="let tech of project.technologies" class="tech-badge">{{tech}}</span>
       </div>
     </div>
   </div>
-  <div class="project-content">
-    <h3>{{ project.title }}</h3>
-    <p>{{ project.description }}</p>
-    <div class="project-tech">
-      <span *ngFor="let tech of project.technologies">{{ tech }}</span>
+  <div class="project-info">
+    <h3 class="project-title">{{project.title}}</h3>
+    <p class="project-description">{{project.description}}</p>
+    <div class="project-details" *ngIf="project.completed || project.client">
+      <span *ngIf="project.completed"><i class="far fa-calendar-alt"></i> {{project.completed}}</span>
+      <span *ngIf="project.client"><i class="far fa-building"></i> {{project.client}}</span>
+    </div>
+    <div class="project-links">
+      <a *ngIf="project.demoUrl || project.projectUrl" [href]="project.demoUrl || project.projectUrl" target="_blank" class="btn btn-primary">
+        <i class="fas fa-external-link-alt"></i> Demo
+      </a>
+      <a *ngIf="project.codeUrl || project.githubUrl" [href]="project.codeUrl || project.githubUrl" target="_blank" class="btn btn-outline">
+        <i class="fab fa-github"></i> Código
+      </a>
     </div>
   </div>
 </div>
