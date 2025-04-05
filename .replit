@@ -1,3 +1,4 @@
+
 modules = ["web", "nodejs-20", "angular-node-20"]
 run = "npm run watch"
 
@@ -5,7 +6,13 @@ run = "npm run watch"
 channel = "stable-24_05"
 
 [deployment]
-run = ["sh", "-c", "npm run watch"]
+build = ["sh", "-c", "ng build --configuration=production"]
+publicDir = "dist/meu-portfolio/browser"
+run = ["sh", "-c", "echo 'Angular app deployed!'"]
+
+[[deployment.rewrites]]
+from = "/*"
+to = "/index.html"
 
 [workflows]
 runButton = "Executar Portfólio"
@@ -21,4 +28,4 @@ args = "ng serve --host=0.0.0.0 --disable-host-check"
 
 [[ports]]
 localPort = 4200
-externalPort = 80
+externalPort =
