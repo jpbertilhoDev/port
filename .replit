@@ -5,5 +5,20 @@ run = "npm run watch"
 channel = "stable-24_05"
 
 [deployment]
-run = ["sh", "-c", "npx serve -s dist/meu-portfolio"]
-build = ["sh", "-c", "ng build"]
+run = ["sh", "-c", "npm run watch"]
+
+[workflows]
+runButton = "Executar Portfólio"
+
+[[workflows.workflow]]
+name = "Executar Portfólio"
+author = 41183488
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "ng serve --host=0.0.0.0"
+
+[[ports]]
+localPort = 4200
+externalPort = 80
