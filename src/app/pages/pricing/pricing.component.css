@@ -219,6 +219,34 @@
   margin-top: 40px;
 }
 
+.contact-cta {
+  text-align: center;
+  margin-top: 60px;
+  padding: 30px;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
+}
+
+.contact-cta p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  color: var(--text-color);
+}
+
+.contact-btn {
+  padding: 12px 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: var(--transition-normal);
+}
+
+.contact-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
 @media (max-width: 768px) {
   .pricing-page {
     padding: 40px 0;
