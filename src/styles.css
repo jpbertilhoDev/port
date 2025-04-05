@@ -85,6 +85,12 @@ body {
               color var(--transition-speed) ease;
 }
 
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 70px; /* Espaço para o navbar móvel */
+  }
+}
+
 a {
   text-decoration: none;
   color: var(--primary-color);

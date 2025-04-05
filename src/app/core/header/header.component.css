@@ -76,23 +76,7 @@
 }
 
 @media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .navigation ul {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .navigation li {
-    margin: 0 1rem;
-  }
-
-  .theme-toggle {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
+  .header {
+    display: none; /* Esconder o header em dispositivos móveis */
   }
 }
