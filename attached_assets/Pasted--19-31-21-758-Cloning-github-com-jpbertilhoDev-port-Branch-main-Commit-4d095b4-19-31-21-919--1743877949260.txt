@@ -1,0 +1,51 @@
+[19:31:21.758] Cloning github.com/jpbertilhoDev/port (Branch: main, Commit: 4d095b4)
+[19:31:21.919] Previous build caches not available
+[19:31:22.705] Cloning completed: 946.000ms
+[19:31:22.879] Running build in Washington, D.C., USA (East) – iad1
+[19:31:23.008] Running "vercel build"
+[19:31:23.387] Vercel CLI 41.4.1
+[19:31:23.924] Installing dependencies...
+[19:31:26.930] npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+[19:31:27.778] npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+[19:31:27.980] npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+[19:31:35.309] 
+[19:31:35.309] added 942 packages in 11s
+[19:31:35.309] 
+[19:31:35.309] 157 packages are looking for funding
+[19:31:35.310]   run `npm fund` for details
+[19:31:35.378] Running "npm run build"
+[19:31:35.495] 
+[19:31:35.495] > meu-portfolio@0.0.0 build
+[19:31:35.496] > ng build
+[19:31:35.496] 
+[19:31:36.355] ❯ Building...
+[19:31:44.647] ✔ Building...
+[19:31:44.648] Initial chunk files   | Names         |  Raw size | Estimated transfer size
+[19:31:44.648] main-EUOKQUGS.js      | main          | 467.53 kB |               109.78 kB
+[19:31:44.648] polyfills-FFHMD2TL.js | polyfills     |  34.52 kB |                11.28 kB
+[19:31:44.648] styles-6LM5ZBOM.css   | styles        |   7.86 kB |                 1.41 kB
+[19:31:44.649] 
+[19:31:44.649]                       | Initial total | 509.91 kB |               122.47 kB
+[19:31:44.649] 
+[19:31:44.649] Application bundle generation failed. [8.292 seconds]
+[19:31:44.649] 
+[19:31:44.650] ▲ [WARNING] bundle initial exceeded maximum budget. Budget 500.00 kB was not met by 9.91 kB with a total of 509.91 kB.
+[19:31:44.650] 
+[19:31:44.650] 
+[19:31:44.650] ▲ [WARNING] src/app/pages/projects/projects.component.css exceeded maximum budget. Budget 4.00 kB was not met by 540 bytes with a total of 4.54 kB.
+[19:31:44.650] 
+[19:31:44.650] 
+[19:31:44.650] ▲ [WARNING] src/app/pages/contact/contact.component.css exceeded maximum budget. Budget 4.00 kB was not met by 12.96 kB with a total of 16.96 kB.
+[19:31:44.650] 
+[19:31:44.650] 
+[19:31:44.650] ▲ [WARNING] src/app/pages/about/about.component.scss exceeded maximum budget. Budget 4.00 kB was not met by 9.46 kB with a total of 13.46 kB.
+[19:31:44.650] 
+[19:31:44.651] 
+[19:31:44.652] ✘ [ERROR] src/app/pages/contact/contact.component.css exceeded maximum budget. Budget 8.00 kB was not met by 8.96 kB with a total of 16.96 kB.
+[19:31:44.652] 
+[19:31:44.652] 
+[19:31:44.652] ✘ [ERROR] src/app/pages/about/about.component.scss exceeded maximum budget. Budget 8.00 kB was not met by 5.46 kB with a total of 13.46 kB.
+[19:31:44.652] 
+[19:31:44.652] 
+[19:31:44.778] Error: Command "npm run build" exited with 1
+[19:31:45.187] 
