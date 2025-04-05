@@ -1,16 +1,17 @@
+
 export interface Project {
   id: number;
   title: string;
   description: string;
-  technologies: string[];
+  image: string;
   imageUrl?: string;
-  image?: string;
-  projectUrl?: string;
+  technologies: string[];
   demoUrl?: string;
-  githubUrl?: string;
+  projectUrl?: string;
   codeUrl?: string;
+  githubUrl?: string;
   featured: boolean;
-  category?: string;
-  completed?: string;
+  category: string;
+  completed: string;
   client?: string;
 }

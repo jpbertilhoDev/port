@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
-
-interface Project {
+import { ProjectCardComponent } from '../../components/project-card/project-card.component';
+import { Project } from '../../models/project.interface';
   id: number;
   title: string;
   description: string;
@@ -20,7 +20,7 @@ interface Project {
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ProjectCardComponent],
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.css'],
   animations: [
