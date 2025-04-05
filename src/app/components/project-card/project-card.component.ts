@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf, NgClass, CommonModule } from '@angular/common';
 import { Project } from '../../models/project.interface';
 import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 
 @Component({
   selector: 'app-project-card',
   standalone: true,
-  imports: [NgFor, NgIf],
+  imports: [NgFor, NgIf, NgClass, CommonModule],
   templateUrl: './project-card.component.html',
   styleUrl: './project-card.component.css',
   animations: [
