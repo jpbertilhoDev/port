@@ -17,7 +17,7 @@ mode = "sequential"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "ng serve --host=0.0.0.0"
+args = "ng serve --host=0.0.0.0 --disable-host-check"
 
 [[ports]]
 localPort = 4200
