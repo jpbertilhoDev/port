@@ -67,7 +67,9 @@ export class PricingComponent implements OnInit {
     }
   ];
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    window.scrollTo(0, 0);
+  }
 
   toggleCurrency(): void {
     this.currency = this.currency === 'EUR' ? 'BRL' : 'EUR';
