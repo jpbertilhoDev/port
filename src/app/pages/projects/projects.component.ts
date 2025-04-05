@@ -1,21 +1,10 @@
+
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 import { ProjectCardComponent } from '../../components/project-card/project-card.component';
 import { Project } from '../../models/project.interface';
-  id: number;
-  title: string;
-  description: string;
-  image: string;
-  technologies: string[];
-  demoUrl?: string;
-  codeUrl?: string;
-  featured: boolean;
-  category: string;
-  completed: string;
-  client?: string;
-}
 
 @Component({
   selector: 'app-projects',

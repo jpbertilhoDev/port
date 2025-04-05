@@ -1,27 +1,24 @@
-
-<div class="project-card" [@fadeIn]>
+<div class="project-card" @fadeIn>
   <div class="project-image">
-    <img [src]="project.image || project.imageUrl" [alt]="project.title" class="img-fluid">
+    <img [src]="project.image" [alt]="project.title" />
     <div class="project-overlay">
-      <div class="project-techs">
-        <span *ngFor="let tech of project.technologies" class="tech-badge">{{tech}}</span>
+      <div class="project-links">
+        <a *ngIf="project.demoUrl" [href]="project.demoUrl" target="_blank" class="project-link">Demo</a>
+        <a *ngIf="project.codeUrl" [href]="project.codeUrl" target="_blank" class="project-link">Código</a>
+        <a *ngIf="project.githubUrl" [href]="project.githubUrl" target="_blank" class="project-link">GitHub</a>
+        <a *ngIf="project.projectUrl" [href]="project.projectUrl" target="_blank" class="project-link">Projeto</a>
       </div>
     </div>
   </div>
   <div class="project-info">
-    <h3 class="project-title">{{project.title}}</h3>
-    <p class="project-description">{{project.description}}</p>
-    <div class="project-details" *ngIf="project.completed || project.client">
-      <span *ngIf="project.completed"><i class="far fa-calendar-alt"></i> {{project.completed}}</span>
-      <span *ngIf="project.client"><i class="far fa-building"></i> {{project.client}}</span>
+    <h3 class="project-title">{{ project.title }}</h3>
+    <p class="project-description">{{ project.description }}</p>
+    <div class="project-meta">
+      <div class="project-category">{{ project.category }}</div>
+      <div class="project-date">{{ project.completed }}</div>
     </div>
-    <div class="project-links">
-      <a *ngIf="project.demoUrl || project.projectUrl" [href]="project.demoUrl || project.projectUrl" target="_blank" class="btn btn-primary">
-        <i class="fas fa-external-link-alt"></i> Demo
-      </a>
-      <a *ngIf="project.codeUrl || project.githubUrl" [href]="project.codeUrl || project.githubUrl" target="_blank" class="btn btn-outline">
-        <i class="fab fa-github"></i> Código
-      </a>
+    <div class="project-technologies">
+      <span *ngFor="let tech of project.technologies" class="tech-tag">{{ tech }}</span>
     </div>
   </div>
 </div>
