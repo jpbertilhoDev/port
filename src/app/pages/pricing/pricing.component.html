@@ -1,0 +1,53 @@
+
+<section class="pricing-page">
+  <div class="container">
+    <h1 class="section-title">Planos e Preços</h1>
+    <p class="section-subtitle">Escolha o plano ideal para o seu projeto</p>
+
+    <div class="currency-toggle-container">
+      <div class="currency-toggle">
+        <span [class.active]="currency === 'EUR'">EUR</span>
+        <div class="toggle-switch" (click)="toggleCurrency()">
+          <div class="toggle-button" [class.right]="currency === 'BRL'"></div>
+        </div>
+        <span [class.active]="currency === 'BRL'">BRL</span>
+      </div>
+
+      <div class="euro-toggle" *ngIf="currency === 'EUR'">
+        <div class="euro-type-selector">
+          <span>Tipo de Euro:</span>
+          <div class="euro-options">
+            <span 
+              [class.active]="euroType === 'EUR'" 
+              (click)="euroType = 'EUR'">€</span>
+            <span 
+              [class.active]="euroType === 'EUR_ALT'" 
+              (click)="euroType = 'EUR_ALT'">€<sup>*</sup></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pricing-plans">
+      <div class="pricing-card" *ngFor="let plan of plans" [class.recommended]="plan.recommended">
+        <div class="ribbon" *ngIf="plan.recommended">Recomendado</div>
+        <h3 class="plan-name">{{plan.name}}</h3>
+        <div class="price">
+          <span class="currency">{{getCurrencySymbol()}}</span>
+          <span class="amount">{{getDisplayPrice(plan)}}</span>
+          <span class="period">/mês</span>
+        </div>
+        <ul class="features">
+          <li *ngFor="let feature of plan.features">
+            <i class="fas fa-check"></i> {{feature}}
+          </li>
+        </ul>
+        <a href="#" class="btn btn-primary">Escolher Plano</a>
+      </div>
+    </div>
+
+    <div class="exchange-info">
+      <p>* Os preços são baseados na taxa de câmbio atual: 1 EUR ≈ 6.00 BRL</p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,249 @@
+
+.pricing-page {
+  padding: 60px 0;
+  background-color: var(--background-color);
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: var(--text-color);
+}
+
+.section-subtitle {
+  text-align: center;
+  font-size: 1.1rem;
+  margin-bottom: 40px;
+  color: var(--text-light);
+}
+
+.currency-toggle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+  gap: 15px;
+}
+
+.currency-toggle {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background-color: var(--card-bg);
+  padding: 10px 20px;
+  border-radius: 30px;
+  box-shadow: var(--shadow-sm);
+}
+
+.currency-toggle span {
+  font-weight: 500;
+  color: var(--text-light);
+  transition: var(--transition-normal);
+}
+
+.currency-toggle span.active {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.toggle-switch {
+  width: 50px;
+  height: 26px;
+  background-color: var(--border-color);
+  border-radius: 30px;
+  position: relative;
+  cursor: pointer;
+  transition: var(--transition-normal);
+}
+
+.toggle-switch:hover {
+  background-color: var(--primary-light);
+}
+
+.toggle-button {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  top: 2px;
+  left: 2px;
+  transition: var(--transition-normal);
+}
+
+.toggle-button.right {
+  left: calc(100% - 24px);
+}
+
+.euro-toggle {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.euro-type-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.euro-options {
+  display: flex;
+  gap: 15px;
+}
+
+.euro-options span {
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: var(--transition-normal);
+}
+
+.euro-options span.active {
+  background-color: var(--primary-light);
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.pricing-plans {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.pricing-card {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid transparent;
+}
+
+.pricing-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-light);
+}
+
+.pricing-card.recommended {
+  border: 2px solid var(--primary-color);
+  transform: scale(1.05);
+}
+
+.pricing-card.recommended:hover {
+  transform: scale(1.05) translateY(-10px);
+}
+
+.ribbon {
+  position: absolute;
+  top: 20px;
+  right: -30px;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 5px 30px;
+  font-size: 0.8rem;
+  transform: rotate(45deg);
+  width: 150px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.plan-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: var(--text-color);
+}
+
+.price {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 25px;
+  color: var(--text-color);
+}
+
+.currency {
+  font-size: 1.5rem;
+  margin-right: 5px;
+  font-weight: 500;
+}
+
+.amount {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.period {
+  margin-left: 5px;
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+.features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 30px 0;
+}
+
+.features li {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  color: var(--text-color);
+}
+
+.features li i {
+  color: var(--success-color);
+  margin-right: 10px;
+  font-size: 0.9rem;
+}
+
+.pricing-card .btn {
+  width: 100%;
+  text-align: center;
+  padding: 12px;
+  font-weight: 600;
+}
+
+.exchange-info {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-light);
+  margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+  .pricing-page {
+    padding: 40px 0;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  .pricing-plans {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .pricing-card.recommended {
+    transform: scale(1);
+  }
+  
+  .pricing-card.recommended:hover {
+    transform: translateY(-10px);
+  }
+  
+  .currency-toggle-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+}
