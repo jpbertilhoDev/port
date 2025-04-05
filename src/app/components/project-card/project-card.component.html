@@ -17,8 +17,11 @@
       <div class="project-category">{{ project.category }}</div>
       <div class="project-date">{{ project.completed }}</div>
     </div>
-    <div class="project-technologies">
-      <span *ngFor="let tech of project.technologies" class="tech-tag">{{ tech }}</span>
+    <div class="project-technologies" @techStagger>
+      <span *ngFor="let tech of project.technologies; let i = index" 
+            class="tech-tag" 
+            [ngClass]="getTechClass(tech)"
+            [style.--index]="i">{{ tech }}</span>
     </div>
   </div>
 </div>
